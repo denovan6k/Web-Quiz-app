@@ -7,15 +7,13 @@ import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import {
   Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
+ 
 } from "@/components/ui/form";
-import { Link } from 'lucide-react';
+// import Link from 'next/link';
+import { Switch } from '@/components/ui/switch'
 
 interface QuizProps {
   title: string;
@@ -51,7 +49,7 @@ const Quiz = () => {
   } | null>(null);
 
   const Dex = parseInt(id as string);
-
+  const router= useRouter(); 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -98,15 +96,27 @@ const Quiz = () => {
       console.log('Wrong answer!');
     }
   };
-
+const handleNextQuestion = () => {
+    setIsSubmitted(false);
+    setAnsweredIndex(null);
+    router.push(`/quiz/${Dex}?que=${currentQuestionIndex+1}` )
+  
+};
   return (
     <>
       <div className='p-[24px] flex flex-col '>
-        <header className='flex items-center mb-[32px]'>
+        <header className='flex items-center justify-between mb-[32px]'>
+          <div className='flex items-center' >
           <span className={`${currentQuiz.color} p-[6px] items-center rounded-lg`}>
             <Image src={currentQuiz.icon} alt='' width={40} height={40} />
           </span>
           <span className='ml-[16px] text-[#313E51] text-[18px]'>{currentQuiz.title}</span>
+          </div>
+         <div className='flex items-center gap-2'>
+         <Image src='/assets/images/icon-sun-dark.svg' alt='' width={16} height={16} />
+          <Switch className='data-[state=checked]:bg-[#A729F5] data-[state=unchecked]:bg-slate-200'/>
+         <Image src='/assets/images/icon-moon-dark.svg' alt='' width={16} height={16} />
+         </div>
         </header>
 
         <section className='flex flex-col gap-4'>
@@ -122,8 +132,8 @@ const Quiz = () => {
                   key={index}
                   type='button'
                   onClick={() => handleAnswer(index)}
-                  className={`bg-white border hover:bg-[#F4F6FA] rounded-lg disabled:text-[#313E51] disabled:cursor-not-allowed disabled:bg-white flex items-center justify-between min-h-[64px] border-slate-300 p-[12px] text-[#313E51] text-[18px] mb-[12px] w-full
-                    ${answeredIndex === index && !isSubmitted ? 'border-2 border-[#b23cfb]' : ''}
+                  className={`bg-white border hover:bg-[#F4F6FA] rounded-lg disabled:text-[#313E51] disabled:cursor-not-allowed disabled:bg-white flex items-center justify-between min-h-[64px]  p-[12px] text-[#313E51] text-[18px] mb-[12px] w-full
+                    ${answeredIndex === index && !isSubmitted ? '  border-2 border-[#A729F5]' : ''}
                     ${isSubmitted && index === answeredIndex && !isCorrect ? 'border-2 border-[#F56565]' : ''}
                     ${isSubmitted && item === currentQuestion?.answer ? 'border-2 border-[#26D782]' : ''}
                   `}
@@ -131,9 +141,9 @@ const Quiz = () => {
                 >
                   <div className='flex items-center '>
                  
-                  <span className=   {` uppercase bg-[#F4F6FA] px-[14px] py-[8px]  ${answeredIndex === index && !isSubmitted ? 'bg-[#b23cfb]' : ''}
-                    ${isSubmitted && index === answeredIndex && !isCorrect ? 'bg-[#F56565]' : ''}
-                    ${isSubmitted && item === currentQuestion?.answer ? 'bg-[#26D782]' : ''}
+                  <span className=   {` uppercase  px-[14px] py-[8px] rounded-lg  ${answeredIndex === index && !isSubmitted ? 'bg-[#ae2bff] text-white' : ''}
+                    ${isSubmitted && index === answeredIndex && !isCorrect ? 'bg-[#F56565] text-white' : ''}
+                    ${isSubmitted && item === currentQuestion?.answer ? 'bg-[#26D782] text-white' : ''}
                   `}>{String.fromCharCode(97 + index)}</span>
                   <span className='ml-[12px] text-wrap'>{item}</span>
                   </div>
@@ -157,15 +167,15 @@ const Quiz = () => {
                     </Button>
 
                     )}
-             {isSubmitted && (
+             {isSubmitted && currentQuestionIndex < questionLength - 1  && (
                <Button
                className='text-white bg-[#A729F5] w-full mt-4'
                type='submit'
-               
-             asChild>
-              <Link href={`/que/${Dex}/que=${Dex + 1}`}>
+               onClick={handleNextQuestion}
+             >
+              
                Next Question
-               </Link>
+            
              </Button>
              )}
 
