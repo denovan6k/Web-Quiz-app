@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { Switch } from '@/components/ui/switch'
 
 // import { useEffect, useState } from 'react'
-const Home = () => {
+const Mobile = () => {
   
 
   return (
@@ -51,4 +51,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default Mobile
