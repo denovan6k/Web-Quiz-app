@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/form";
 // import Link from 'next/link';
 import { Switch } from '@/components/ui/switch'
-
+import { useQuestionStore } from '@/app/store';
 interface QuizProps {
   title: string;
   color: string;
@@ -48,6 +48,20 @@ const Quiz = () => {
     answer: string;
   } | null>(null);
 
+  const {
+    correctAnswer,
+    wrongAnswer,
+    answeredQuestions,
+    setCorrectAnswer,
+    setWrongAnswer,
+    setAnsweredQuestions,
+    setCurrentQue,
+    answerQuestion,
+  } = useQuestionStore();
+
+
+
+
   const Dex = parseInt(id as string);
   const router= useRouter(); 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -68,13 +82,14 @@ const Quiz = () => {
           setCurrentQuiz(selectedQuiz);
           setCurrentQuestion(selectedQuiz.questions[questionIndex]);
           setCurrentQuestionIndex(questionIndex);
+          setCurrentQue(questionIndex);
           setQuestionLength(selectedQuiz.questions.length);
         }
       }
     } catch (error) {
       console.error(error);
     }
-  }, [id, searchParams]);
+  }, [id, searchParams,setCurrentQue]);
 
   if (!currentQuiz || !currentQuestion) {
     return <p>Loading...</p>;
@@ -90,12 +105,19 @@ const Quiz = () => {
     const selectedAnswer = currentQuestion?.options[answeredIndex as number];
     if (selectedAnswer === currentQuestion?.answer) {
       setIsCorrect(true);
-      console.log('Correct answer!');
+      answerQuestion(true);
+      console.log('Correct answer!', correctAnswer);
+      
     } else {
       setIsCorrect(false);
       console.log('Wrong answer!');
+      setWrongAnswer();
+    }
+    if (currentQuestionIndex + 1 >= questionLength) {
+      router.push(`/score/${Dex}`); // Redirect to the score page
     }
   };
+
 const handleNextQuestion = () => {
     setIsSubmitted(false);
     setAnsweredIndex(null);
@@ -104,13 +126,13 @@ const handleNextQuestion = () => {
 };
   return (
     <>
-      <div className='p-[24px] flex flex-col '>
+      <div className='p-[24px] flex flex-col tl:p-[64px] min-h-screen lg:px-[140px] lg:py-[50px] '>
         <header className='flex items-center justify-between mb-[32px]'>
           <div className='flex items-center' >
           <span className={`${currentQuiz.color} p-[6px] items-center rounded-lg`}>
             <Image src={currentQuiz.icon} alt='' width={40} height={40} />
           </span>
-          <span className='ml-[16px] text-[#313E51] text-[18px]'>{currentQuiz.title}</span>
+          <span className='ml-[16px] tl:ml-[24px] text-[#313E51] text-[18px] kl:text-[28px]'>{currentQuiz.title}</span>
           </div>
          <div className='flex items-center gap-2'>
          <Image src='/assets/images/icon-sun-dark.svg' alt='' width={16} height={16} />
@@ -118,10 +140,10 @@ const handleNextQuestion = () => {
          <Image src='/assets/images/icon-moon-dark.svg' alt='' width={16} height={16} />
          </div>
         </header>
-
-        <section className='flex flex-col gap-4'>
-          <p className='text-[#626C7F] text-[14px]'>Question {currentQuestionIndex + 1} of {questionLength}</p>
-          <h1 className='text-[#313E51] text-[20px]'>{currentQuestion.question}</h1>
+       <div className='lg:grid lg:grid-cols-2 lg:gap-[120px]'>
+        <section className='flex flex-col gap-4 lg:mt-[40px]'>
+          <p className='text-[#626C7F] text-[14px] kl:text-[20px]'>Question {currentQuestionIndex + 1} of {questionLength}</p>
+          <h1 className='text-[#313E51] text-[20px] kl:text-[36px]'>{currentQuestion.question}</h1>
         </section>
 
         <section className='flex flex-col mt-[40px]'>
@@ -132,7 +154,7 @@ const handleNextQuestion = () => {
                   key={index}
                   type='button'
                   onClick={() => handleAnswer(index)}
-                  className={`bg-white border hover:bg-[#F4F6FA] rounded-lg disabled:text-[#313E51] disabled:cursor-not-allowed disabled:bg-white flex items-center justify-between min-h-[64px]  p-[12px] text-[#313E51] text-[18px] mb-[12px] w-full
+                  className={`bg-white border hover:bg-[#F4F6FA] rounded-2xl disabled:text-[#313E51] disabled:cursor-not-allowed disabled:bg-white flex items-center justify-between min-h-[64px] kl:min-h-[80px]  p-[12px] text-[#313E51] text-[18px] mb-[12px] kl:mb-[24px] w-full
                     ${answeredIndex === index && !isSubmitted ? '  border-2 border-[#A729F5]' : ''}
                     ${isSubmitted && index === answeredIndex && !isCorrect ? 'border-2 border-[#F56565]' : ''}
                     ${isSubmitted && item === currentQuestion?.answer ? 'border-2 border-[#26D782]' : ''}
@@ -141,11 +163,11 @@ const handleNextQuestion = () => {
                 >
                   <div className='flex items-center '>
                  
-                  <span className=   {` uppercase  px-[14px] py-[8px] rounded-lg  ${answeredIndex === index && !isSubmitted ? 'bg-[#ae2bff] text-white' : ''}
+                  <span className=   {` uppercase  px-[14px] py-[8px] rounded-lg kl:text-[20px]  ${answeredIndex === index && !isSubmitted ? 'bg-[#ae2bff] text-white' : ''}
                     ${isSubmitted && index === answeredIndex && !isCorrect ? 'bg-[#F56565] text-white' : ''}
                     ${isSubmitted && item === currentQuestion?.answer ? 'bg-[#26D782] text-white' : ''}
                   `}>{String.fromCharCode(97 + index)}</span>
-                  <span className='ml-[12px] text-wrap'>{item}</span>
+                  <span className='ml-[12px] text-wrap kl:text-[20px]'>{item}</span>
                   </div>
                   <div className=''>
                       {isSubmitted && index === answeredIndex && !isCorrect ?( <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
@@ -159,7 +181,7 @@ const handleNextQuestion = () => {
               ))}
                     {!isSubmitted && (
                       <Button
-                      className='text-white bg-[#A729F5] w-full mt-4'
+                      className='text-white bg-[#A729F5] w-full mt-4 kl:p-[32px] rounded-2xl kl:text-[18px]'
                       type='submit'
                       disabled={answeredIndex === null || isSubmitted}
                     >
@@ -169,7 +191,7 @@ const handleNextQuestion = () => {
                     )}
              {isSubmitted && currentQuestionIndex < questionLength - 1  && (
                <Button
-               className='text-white bg-[#A729F5] w-full mt-4'
+               className='text-white bg-[#A729F5] w-full mt-4 kl:p-[32px] rounded-2xl mb-[60px] lg:mb-[100px] kl:text-[18px]'
                type='submit'
                onClick={handleNextQuestion}
              >
@@ -178,7 +200,7 @@ const handleNextQuestion = () => {
             
              </Button>
              )}
-
+              {/* {correctAnswer} */}
 
               {form.formState.errors.selected && (
                 <p className='text-red-500 text-center'>{form.formState.errors.selected.message}</p>
@@ -186,6 +208,7 @@ const handleNextQuestion = () => {
             </form>
           </Form>
         </section>
+        </div>
       </div>
     </>
   );

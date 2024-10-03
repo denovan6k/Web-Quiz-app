@@ -5,7 +5,8 @@ import { useSearchParams } from 'next/navigation'
 import { useParams } from 'next/navigation'
 import data from '@/app/mobile/data.json'
 import Image from 'next/image'
-
+import { useQuestionStore } from '@/app/store'
+import Link from 'next/link'
 interface QuizProps {
     title: string;
     color: string;
@@ -26,7 +27,7 @@ interface QuizProps {
         options: string[];
         answer: string;
       } | null>(null); 
-
+const {correctAnswer,resetQuiz}= useQuestionStore()
 useEffect(() => {
     
      try{
@@ -81,12 +82,23 @@ if (!Quiz || !question) {
           </span>
           <span className='ml-[16px] text-[#313E51] text-[18px]'>{Quiz?.title}</span>
          </div>
+
+         <div className=' flex flex-col items-center text-[88px] font-bold text-[#313E51] gap-4'>
+             {correctAnswer}
+             
+             <div className='text-[18px] text-[#626C7F]'>
+            out of {Quiz?.questions.length}
+             </div>
+             
+         </div>
          
          </main>
           
-         <Button>
-            
+         <Button onClick={resetQuiz} asChild >
+            <Link href={`/mobile`}>
             Play again
+            </Link>
+           
             </Button> 
 
          </div>
