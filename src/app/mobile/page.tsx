@@ -56,13 +56,13 @@ const Mobile = () => {
          </div> 
       </div>
     </header>
-    <div className='lg:grid lg:grid-cols-2 lg:gap-[146px]'>
+    <div className='lg:grid lg:grid-cols-2 lg:gap-[146px] kl:mt-[64px] '>
     <section className='flex flex-col text-wrap '>
         <h1 className='text-[40px] font-medium text-[#313E51] dark:text-white kl:text-[42px] xl:text-[64px]'> Welcome to the</h1>
         <h1 className='text-[40px] font-bold text-[#313E51] kl:text-[42px] dark:text-white xl:text-[64px]'> Frontend Quiz! </h1>
         <p className='text-[14px] text-[#626C7F] kl:text-[20px] dark:text-white'> Pick a subject to get started. </p>
     </section>
-    <section className='flex flex-col gap-[12px] tl:gap-[24px]  '>
+    <section className='flex flex-col gap-[12px] tl:gap-[24px] tl:mt-[64px] '>
       {data.quizzes.map((item,index)=>
       
       <Button key={index} className={`flex justify-start p-[12px] dark:text-white dark:bg-[#313E51] h-[64px] space-x-4 items-center min-w-[303px] lg:w-full flex-grow bg-white text-[18px] kl:text-[28px] font-semibold text-[#313E51] border rounded-2xl tl:min-h-[80px] hover:bg-[#F4F6FA]`} asChild>

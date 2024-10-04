@@ -79,7 +79,7 @@ const Quiz = () => {
   useEffect(() => {
     try {
      
-      const boy = async () => {
+      const getData = async () => {
         if (id) {
           const quizIndex = parseInt(id as string);
           const questionIndex = parseInt(searchParams.get('que') || '0');
@@ -97,7 +97,7 @@ const Quiz = () => {
         }
       }
 
-     boy()
+     getData()
       
     } catch (error) {
       console.error(error);
