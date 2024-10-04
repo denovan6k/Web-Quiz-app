@@ -79,25 +79,24 @@ const Quiz = () => {
   useEffect(() => {
     try {
      
-      const getData = async () => {
+      
         if (id) {
           const quizIndex = parseInt(id as string);
           const questionIndex = parseInt(searchParams.get('que') || '0');
   
           const selectedQuiz = data.quizzes[quizIndex];
           if (selectedQuiz) {
-            const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
-            await delay(1000);
+           
             setCurrentQuiz(selectedQuiz);
             setCurrentQuestion(selectedQuiz.questions[questionIndex]);
             setCurrentQuestionIndex(questionIndex);
             setCurrentQue(questionIndex);
             setQuestionLength(selectedQuiz.questions.length);
           }
-        }
+      
       }
 
-     getData()
+    
       
     } catch (error) {
       console.error(error);
@@ -238,7 +237,7 @@ const handleNextQuestion = () => {
                     )}
              {isSubmitted && currentQuestionIndex < questionLength - 1  && (
                <Button
-               className='text-white bg-[#A729F5] w-full mt-4 kl:p-[32px] rounded-2xl mb-[60px] lg:mb-[100px] kl:text-[18px] hover:bg-[#a729f579]'
+               className='text-white  bg-[#A729F5] w-full mt-4 kl:p-[32px] rounded-2xl mb-[60px] lg:mb-[100px] kl:text-[18px] hover:bg-[#a729f579]'
                type='submit'
                onClick={handleNextQuestion}
              >

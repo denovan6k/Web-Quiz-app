@@ -33,7 +33,7 @@ const {correctAnswer,resetQuiz}= useQuestionStore()
 useEffect(() => {
     
      try{
-      const getData = async () => {
+      
        if(id){
         const currentQuizIndex= parseInt(id as string) 
         const questionIndex = parseInt(searchParams.get('que') || '0');
@@ -43,17 +43,16 @@ useEffect(() => {
           
         
         if (selectedQuiz){
-          const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
-          await delay(1000);
+          
            
             setCurrentQuiz(selectedQuiz) 
             setQuestion(selectedQuiz.questions[questionIndex])
       }
        }
 
-      }
+   
 
-    getData()
+ 
      }
      catch(e){
           console.log(e as Error)
