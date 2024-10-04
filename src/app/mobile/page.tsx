@@ -6,12 +6,12 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Switch } from '@/components/ui/switch'
 import Skeletonloader from './Skeletonloader'
-
+import { useQuestionStore } from '../store'
 // import { useEffect, useState } from 'react'
 const Mobile = () => {
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
   const rootElement = useRef<HTMLElement | null>(null); // Initialize as null
-
+ const{resetQuiz}=useQuestionStore()
   useEffect(() => {
     
     if (typeof window !== 'undefined') {
@@ -22,8 +22,9 @@ const Mobile = () => {
       const initialTheme = storedTheme ? (storedTheme as 'light' | 'dark') : 'light';
       setTheme(initialTheme);
       rootElement.current.classList.add(initialTheme);
+      resetQuiz()
     }
-  }, []);
+  }, [resetQuiz]);
 
   const toggleTheme = () => {
     if (rootElement.current) {
