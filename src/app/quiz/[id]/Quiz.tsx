@@ -181,11 +181,10 @@ const handleNextQuestion = () => {
           <span className='ml-[16px] tl:ml-[24px] text-[#313E51] text-[18px] kl:text-[28px] dark:text-white'>{currentQuiz.title}</span>
           </div>
          <div className='flex items-center gap-2'>
-         <Image src='/assets/images/icon-moon-dark.svg' alt='' width={16} height={16} />
-         
+          
+         <Image src='/assets/images/icon-sun-dark.svg' alt='' width={16} height={16} />
           <Switch className='data-[state=checked]:bg-[#A729F5] data-[state=unchecked]:bg-slate-200' onCheckedChange={toggleTheme}/>
-          <Image src='/assets/images/icon-sun-dark.svg' alt='' width={16} height={16} />
-         
+         <Image src='/assets/images/icon-moon-dark.svg' alt='' width={16} height={16} />
          </div>
         </header>
        <div className='lg:grid lg:grid-cols-2 lg:gap-[120px]'>
