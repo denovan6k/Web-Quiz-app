@@ -59,7 +59,7 @@ const Quiz = () => {
     setAnsweredQuestions,
     setCurrentQue,
     answerQuestion,
-    setProgress,
+   
     progress,
   } = useQuestionStore();
 
@@ -147,7 +147,7 @@ const Quiz = () => {
     if (selectedAnswer === currentQuestion?.answer) {
       setIsCorrect(true);
       answerQuestion(true);
-      setProgress();
+      
       
       
     } else {
