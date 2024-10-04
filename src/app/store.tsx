@@ -38,7 +38,7 @@ export const useQuestionStore = create<QuestionStore>()(
         answeredQuestions: 0,
         currentQue: 0,
         answeredQuestionsList: [],
-        progress: 0,
+        progress: 10,
         
         setCorrectAnswer: async () => {
             
