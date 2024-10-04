@@ -5,7 +5,7 @@ import data from "./data.json"
 import Image from 'next/image'
 import Link from 'next/link'
 import { Switch } from '@/components/ui/switch'
-
+import Skeletonloader from './Skeletonloader'
 
 // import { useEffect, useState } from 'react'
 const Mobile = () => {
@@ -34,7 +34,10 @@ const Mobile = () => {
       localStorage.setItem('theme', newTheme); // Persist the theme in localStorage
     }
   };
-
+ 
+  if (!data) {
+    return <Skeletonloader />;
+  }
 
 
 
