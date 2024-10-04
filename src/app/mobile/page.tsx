@@ -6,12 +6,14 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Switch } from '@/components/ui/switch'
 
+
 // import { useEffect, useState } from 'react'
 const Mobile = () => {
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
   const rootElement = useRef<HTMLElement | null>(null); // Initialize as null
 
   useEffect(() => {
+    
     if (typeof window !== 'undefined') {
       // Set document.documentElement only on the client side
       rootElement.current = document.documentElement;
@@ -32,6 +34,7 @@ const Mobile = () => {
       localStorage.setItem('theme', newTheme); // Persist the theme in localStorage
     }
   };
+
 
 
 
