@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Quiz App
 
-## Getting Started
+## Overview
 
-First, run the development server:
+This is a dynamic quiz application built with Next.js, React, and TypeScript. Users can navigate through various quizzes, answer questions, and view their scores. The app leverages Zustand for state management and integrates form validation using Zod and React Hook Form.
 
+## Features
+
+- **Dynamic Quiz Loading**: Quizzes are loaded dynamically based on user selection, allowing for a seamless experience.
+- **Responsive Design**: The app is designed to be responsive, providing a smooth experience on both mobile and desktop devices.
+- **Dark Mode Toggle**: Users can switch between light and dark themes, with their preferences saved in local storage.
+- **Real-time State Management**: Uses Zustand for managing quiz states, ensuring smooth transitions and updates throughout the application.
+- **Form Validation**: Implemented with Zod and React Hook Form for a better user experience and input validation.
+- **Progress Tracking**: Users can see their progress through quizzes.
+
+## Technologies Used
+
+- **Next.js**: For server-side rendering and routing.
+- **React**: For building user interfaces.
+- **TypeScript**: For type safety.
+- **Zustand**: For state management.
+- **Zod**: For schema validation.
+- **React Hook Form**: For managing form state and validation.
+- **Tailwind CSS**: For styling.
+
+## Installation
+
+To get started with the Quiz App, follow these steps:
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/denovan6k/Web-Quiz-app.git
+
+   ```
 ```bash
+cd Web-Quiz-app
+
+npm install
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
+## Folder structure
+```bash
+your-repo-name/
+├── app/
+│   ├── store/          # Zustand store for state management
+│   ├── components/     # Reusable UI components
+│   ├── mobile/         # Mobile-specific components and assets
+│   ├── pages/          # Next.js pages
+│   ├── styles/         # CSS and styling
+│   └── data.json       # Quiz data
+├── public/             # Static files and assets
+├── package.json        # Project dependencies
+└── README.md           # Project documentation
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
