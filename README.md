@@ -42,7 +42,7 @@ npm run dev
 ```
 ## Folder structure
 ```bash
-your-repo-name/
+Web-Quiz-app/
 ├── app/
 │   ├── store/          # Zustand store for state management
 │   ├── components/     # Reusable UI components
