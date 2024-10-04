@@ -190,7 +190,7 @@ const handleNextQuestion = () => {
         <section className='flex flex-col gap-4 lg:mt-[40px]'>
           <p className='text-[#626C7F] text-[14px] kl:text-[20px] font-rubikItalic'>Question {currentQuestionIndex + 1} of {questionLength}</p>
           <h1 className='text-[#313E51] text-[20px] kl:text-[36px] dark:text-white'>{currentQuestion.question}</h1>
-          <Progress value={progress} className="w-full mt-[28px] tl:mt-[44px] [&>*]:bg-[#A729F5] lg:mt-[168px] mb-[44px] tl:mb-[68px]" />
+          <Progress value={progress} className="w-full mt-[28px] tl:mt-[44px] [&>*]:bg-[#A729F5] lg:mt-[168px] mb-[22px] kl:mb-[68px]" />
         </section>
 
         <section className='flex flex-col mt-[40px]'>
