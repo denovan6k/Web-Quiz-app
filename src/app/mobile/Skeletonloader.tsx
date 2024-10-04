@@ -21,8 +21,9 @@ const Skeletonloader = () => {
         </header>
        <div className='lg:grid lg:grid-cols-2 lg:gap-[120px] kl:mt-[64px] '>
         <section className='flex flex-col gap-4 lg:mt-[40px]'>
-          <Skeleton className='text-[#626C7F] h-[14px] kl:h-[20px]'/>
-          <Skeleton className='text-[#313E51] h-[20px] kl:h-[36px]'/>
+          <Skeleton className=' h-[14px] kl:h-[20px]'/>
+          <Skeleton className=' h-[20px] kl:h-[36px]'/>
+          <Skeleton className=' h-[20px] kl:h-[36px] mt-[40px]'/>
         </section>
 
         <section className='flex flex-col mt-[40px] tl:mt-[64px]'>
