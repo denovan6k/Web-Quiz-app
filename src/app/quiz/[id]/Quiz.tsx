@@ -149,12 +149,11 @@ const Quiz = () => {
       setIsCorrect(true);
       answerQuestion(true);
       setProgress();
-      console.log('Correct answer!', correctAnswer);
-      console.log(progress)
+      
       
     } else {
       setIsCorrect(false);
-      console.log('Wrong answer!');
+      
      
       setWrongAnswer();
     }
