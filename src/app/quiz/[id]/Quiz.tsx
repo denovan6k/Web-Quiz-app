@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { useParams, useSearchParams } from 'next/navigation';
 import data from '../../mobile/data.json';
@@ -16,6 +16,7 @@ import {
 import { Switch } from '@/components/ui/switch'
 import { useQuestionStore } from '@/app/store';
 import Skeletonloader from '@/app/mobile/Skeletonloader';
+import { Progress } from '@/components/ui/progress';
 interface QuizProps {
   title: string;
   color: string;
@@ -58,6 +59,8 @@ const Quiz = () => {
     setAnsweredQuestions,
     setCurrentQue,
     answerQuestion,
+    setProgress,
+    progress,
   } = useQuestionStore();
 
 
@@ -100,6 +103,35 @@ const Quiz = () => {
       console.error(error);
     }
   }, [id, searchParams,setCurrentQue]);
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const rootElement = useRef<HTMLElement | null>(null); // Initialize as null
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      // Set document.documentElement only on the client side
+      rootElement.current = document.documentElement;
+
+      const storedTheme = localStorage.getItem('theme');
+      const initialTheme = storedTheme ? (storedTheme as 'light' | 'dark') : 'light';
+      setTheme(initialTheme);
+      rootElement.current.classList.add(initialTheme);
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    if (rootElement.current) {
+      const newTheme = theme === 'light' ? 'dark' : 'light';
+      rootElement.current.classList.remove(theme); // Remove the current theme class
+      rootElement.current.classList.add(newTheme); // Add the new theme class
+      setTheme(newTheme);
+      localStorage.setItem('theme', newTheme); // Persist the theme in localStorage
+    }
+  };
+
+
+
+
+
 
   if (!currentQuiz || !currentQuestion) {
     return <Skeletonloader />;
@@ -116,11 +148,14 @@ const Quiz = () => {
     if (selectedAnswer === currentQuestion?.answer) {
       setIsCorrect(true);
       answerQuestion(true);
+      setProgress();
       console.log('Correct answer!', correctAnswer);
+      console.log(progress)
       
     } else {
       setIsCorrect(false);
       console.log('Wrong answer!');
+     
       setWrongAnswer();
     }
     if (currentQuestionIndex + 1 >= questionLength) {
@@ -136,24 +171,26 @@ const handleNextQuestion = () => {
 };
   return (
     <>
+    <div className=' bg-my-image bg-cover tl:bg-tab-image  lg:bg-desktop-image  dark:bg-[#313E51] dark:bg-dark-image lg:dark:bg-dark-desktop-image tl:dark:bg-dark-tab-image bg-[#F4F6FA]'>
       <div className='p-[24px] flex flex-col tl:p-[32px] min-h-screen lg:px-[140px]  '>
         <header className='flex items-center justify-between mb-[32px]'>
           <div className='flex items-center' >
           <span className={`${currentQuiz.color} p-[6px] items-center rounded-lg`}>
             <Image src={currentQuiz.icon} alt='' width={40} height={40} />
           </span>
-          <span className='ml-[16px] tl:ml-[24px] text-[#313E51] text-[18px] kl:text-[28px]'>{currentQuiz.title}</span>
+          <span className='ml-[16px] tl:ml-[24px] text-[#313E51] text-[18px] kl:text-[28px] dark:text-white'>{currentQuiz.title}</span>
           </div>
          <div className='flex items-center gap-2'>
          <Image src='/assets/images/icon-sun-dark.svg' alt='' width={16} height={16} />
-          <Switch className='data-[state=checked]:bg-[#A729F5] data-[state=unchecked]:bg-slate-200'/>
+          <Switch className='data-[state=checked]:bg-[#A729F5] data-[state=unchecked]:bg-slate-200' onCheckedChange={toggleTheme}/>
          <Image src='/assets/images/icon-moon-dark.svg' alt='' width={16} height={16} />
          </div>
         </header>
        <div className='lg:grid lg:grid-cols-2 lg:gap-[120px]'>
         <section className='flex flex-col gap-4 lg:mt-[40px]'>
-          <p className='text-[#626C7F] text-[14px] kl:text-[20px]'>Question {currentQuestionIndex + 1} of {questionLength}</p>
-          <h1 className='text-[#313E51] text-[20px] kl:text-[36px]'>{currentQuestion.question}</h1>
+          <p className='text-[#626C7F] text-[14px] kl:text-[20px] font-rubikItalic'>Question {currentQuestionIndex + 1} of {questionLength}</p>
+          <h1 className='text-[#313E51] text-[20px] kl:text-[36px] dark:text-white'>{currentQuestion.question}</h1>
+          <Progress value={progress} className="w-full mt-[28px] tl:mt-[44px] [&>*]:bg-[#A729F5] lg:mt-[168px] mb-[44px] tl:mb-[68px]" />
         </section>
 
         <section className='flex flex-col mt-[40px]'>
@@ -164,7 +201,7 @@ const handleNextQuestion = () => {
                   key={index}
                   type='button'
                   onClick={() => handleAnswer(index)}
-                  className={`bg-white border hover:bg-[#F4F6FA] rounded-2xl disabled:text-[#313E51] disabled:cursor-not-allowed disabled:bg-white flex items-center justify-between min-h-[64px] kl:min-h-[80px]  p-[12px] text-[#313E51] text-[18px] mb-[12px] kl:mb-[24px] w-full
+                  className={`bg-white dark:bg-[#3B4D66] dark:text-white border hover:bg-[#F4F6FA] rounded-2xl disabled:text-[#313E51] disabled:cursor-not-allowed disabled:bg-white flex items-center justify-between min-h-[64px] kl:min-h-[80px]  p-[12px] text-[#313E51] text-[18px] mb-[12px] kl:mb-[24px] w-full
                     ${answeredIndex === index && !isSubmitted ? '  border-2 border-[#A729F5]' : ''}
                     ${isSubmitted && index === answeredIndex && !isCorrect ? 'border-2 border-[#F56565]' : ''}
                     ${isSubmitted && item === currentQuestion?.answer ? 'border-2 border-[#26D782]' : ''}
@@ -173,10 +210,10 @@ const handleNextQuestion = () => {
                 >
                   <div className='flex items-center '>
                  
-                  <span className=   {` uppercase  px-[14px] py-[8px] rounded-lg kl:text-[20px]  ${answeredIndex === index && !isSubmitted ? 'bg-[#ae2bff] text-white' : ''}
+                  <div className=   {` uppercase   px-[14px] py-[8px] rounded-lg kl:text-[20px]  ${answeredIndex === index && !isSubmitted ? 'bg-[#ae2bff] text-white' : ''}
                     ${isSubmitted && index === answeredIndex && !isCorrect ? 'bg-[#F56565] text-white' : ''}
                     ${isSubmitted && item === currentQuestion?.answer ? 'bg-[#26D782] text-white' : ''}
-                  `}>{String.fromCharCode(97 + index)}</span>
+                  `}>{String.fromCharCode(97 + index)}</div>
                   <span className='ml-[12px] text-wrap kl:text-[20px]'>{item}</span>
                   </div>
                   <div className=''>
@@ -220,8 +257,11 @@ const handleNextQuestion = () => {
         </section>
         </div>
       </div>
+      </div>
     </>
   );
 };
 
 export default Quiz;
+
+

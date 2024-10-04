@@ -1,5 +1,9 @@
 import type { Config } from "tailwindcss";
 import tailwindcssAnimate from "tailwindcss-animate";
+
+
+
+  
 const config: Config = {
     darkMode: ["class"],
     content: [
@@ -13,6 +17,18 @@ const config: Config = {
 		screens: {
 			tl: { 'min': '640px', 'max': '1023px' },
 			kl:{ 'min': '640px' }
+		},
+		backgroundImage: {
+			'my-image': "url('/assets/images/pattern-background-mobile-light.svg')",
+			'tab-image': "url('/assets/images/pattern-background-tablet-light.svg')",
+			'desktop-image': "url('/assets/images/pattern-background-desktop-light.svg')",
+			'dark-image': "url('/assets/images/pattern-background-mobile-dark.svg')",
+			'dark-tab-image': "url('/assets/images/pattern-background-tablet-dark.svg')",
+			'dark-desktop-image': "url('/assets/images/pattern-background-desktop-dark.svg')",
+		},
+		fontFamily: {
+			rubik: ["var(--font-rubik)"],
+			rubikItalic: ["var(--font-rubik-italic)"],
 		},
   		colors: {
   			background: 'hsl(var(--background))',
