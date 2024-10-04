@@ -149,7 +149,7 @@ if (!Quiz || !question) {
          </main>
           
          <Button onClick={resetQuiz} className='bg-[#A729F5] hover:bg-[#a729f575] p[32px] tl-[64px] text-white w-full mt-[40px]' asChild >
-            <Link href={`/mobile`}>
+            <Link href={`/`}>
             Play again
             </Link>
            
