@@ -8,7 +8,7 @@ type QuestionStore ={
     currentQue: number
     answeredQuestionsList: number[];
     progress: number
-    
+    setProgress: () => void
     setCurrentQue: (currentQue: number) => void,
     answerQuestion: (isCorrect: boolean) => void;
     setCorrectAnswer: () => Promise<void>
@@ -46,6 +46,7 @@ export const useQuestionStore = create<QuestionStore>()(
             set((state) => ({correctAnswer: state.correctAnswer + 1}))},
         setWrongAnswer: () => set((state) => ({wrongAnswer: state.wrongAnswer + 1})),
          setCurrentQue: (currentQue) => set({currentQue}), 
+         setProgress: () => set((state) => ({progress: state.progress + 10})),
         answerQuestion: (isCorrect:boolean) => {
             const { currentQue, answeredQuestionsList, } = get()
             if (answeredQuestionsList.includes(currentQue)) {

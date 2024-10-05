@@ -59,7 +59,7 @@ const Quiz = () => {
     setAnsweredQuestions,
     setCurrentQue,
     answerQuestion,
-   
+   setProgress,
     progress,
   } = useQuestionStore();
 
@@ -155,6 +155,7 @@ const Quiz = () => {
       
      
       setWrongAnswer();
+      setProgress();
     }
     if (currentQuestionIndex + 1 >= questionLength) {
       router.push(`/score/${Dex}`); // Redirect to the score page
